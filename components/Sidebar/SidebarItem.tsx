@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface Props {
   icon: React.ReactNode;
   text: string;
@@ -6,7 +8,7 @@ interface Props {
 }
 
 const SidebarItem = ({ icon, text, href, isOpen }: Props) => (
-  <a
+  <Link
     href={href}
     className={`flex items-center space-x-4 w-full px-6 py-4 rounded-xl hover:bg-purple-500 hover:text-white ${
       !isOpen && "justify-center"
@@ -14,7 +16,7 @@ const SidebarItem = ({ icon, text, href, isOpen }: Props) => (
   >
     {icon}
     {isOpen && <span className="text-lg">{text}</span>}
-  </a>
+  </Link>
 );
 
 export default SidebarItem;

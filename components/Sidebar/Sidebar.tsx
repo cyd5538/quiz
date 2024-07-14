@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   ChevronRight,
@@ -40,19 +40,19 @@ const Sidebar = () => {
         <SidebarItem
           icon={<Pen size={24} />}
           text="Create"
-          href="/about"
+          href="/create"
           isOpen={isOpen}
         />
         <SidebarItem
           icon={<LayoutDashboard size={24} />}
           text="Dashboard"
-          href="/contact"
+          href="/dashboard"
           isOpen={isOpen}
         />
         <SidebarItem
           icon={<User size={24} />}
           text="User"
-          href="/settings"
+          href="/user"
           isOpen={isOpen}
         />
         <SidebarItem
