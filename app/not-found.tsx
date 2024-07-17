@@ -12,7 +12,7 @@ export default function NotFound() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}
       >
-        <h1 className="text-4xl font-semibold">404 - Page Not Found</h1>
+        <h1 className="sm:text-4xl text:2xl font-semibold">404 - Page Not Found</h1>
       </motion.div>
       <motion.button 
         className="shadow-[inset_0_0_0_2px_#616467] text-black px-12 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200"

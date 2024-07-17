@@ -43,7 +43,7 @@ export default function Page() {
 
  
   return (
-    <div className="pl-[90px] flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Card className="w-[300px] flex flex-col items-center justify-center min-h-screen">
         <CardHeader>
           <CardTitle>서비스 이용하기</CardTitle>
