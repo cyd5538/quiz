@@ -8,18 +8,35 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FaGoogle, FaApple, FaGithub } from "react-icons/fa";
+import { FaGoogle, FaGithub } from "react-icons/fa";
+import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { useRouter } from 'next/navigation'
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Page() {
-  const handleGoogleLogin = () => {};
+  const router = useRouter()
+  const { toast } = useToast()
 
-  const handleAppleLogin = () => {};
+  const handleLogin = async (provider: any) => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log(result.user);
+      toast({
+        description: "성공적으로 로그인되었습니다.",
+      })
+      router.push("/")
+    } catch (error: any) {
+      console.error("error: ", error);
+    }
+  };
 
-  const handleGithubLogin = () => {};
+  const handleGoogleLogin = () => handleLogin(new GoogleAuthProvider());
+  const handleGithubLogin = () => handleLogin(new GithubAuthProvider());
 
   return (
     <div className="pl-[90px] flex items-center justify-center min-h-screen bg-gray-100">
-      <Card className="w-[300px] flex flex-col tems-center justify-center min-h-screen">
+      <Card className="w-[300px] flex flex-col items-center justify-center min-h-screen">
         <CardHeader>
           <CardTitle>서비스 이용하기</CardTitle>
           <CardDescription>소셜 계정으로 간편하게 시작하세요.</CardDescription>
@@ -28,18 +45,11 @@ export default function Page() {
           <div className="flex flex-col gap-4">
             <Button
               onClick={handleGoogleLogin}
-              className="w-full  bg-white hover:bg-gray-100"
+              className="w-full bg-white hover:bg-gray-100"
               variant="outline"
             >
               <FaGoogle className="mr-2 h-4 w-4" />
               <span className="w-36">Google로 계속하기</span>
-            </Button>
-            <Button
-              onClick={handleAppleLogin}
-              className="w-full bg-black text-white hover:bg-gray-800"
-            >
-              <FaApple className="mr-2 h-4 w-4" />
-              <span className="w-36">Apple로 계속하기</span>{" "}
             </Button>
             <Button
               onClick={handleGithubLogin}
