@@ -13,17 +13,24 @@ import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebas
 import { auth } from "@/lib/firebase";
 import { useRouter } from 'next/navigation'
 import { useToast } from "@/components/ui/use-toast";
+import userStore from "@/stores/userStore";
 
 export default function Page() {
   const router = useRouter()
   const { toast } = useToast()
+  const { user, setUser } = userStore()
 
+  if(user) {
+    router.push("/")
+    return null;
+  }
+  
   const handleLogin = async (provider: any) => {
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log(result.user);
+      setUser(result.user);
       toast({
-        description: "성공적으로 로그인되었습니다.",
+        description: "성공적으로 로그인 되었습니다.",
       })
       router.push("/")
     } catch (error: any) {
@@ -34,6 +41,7 @@ export default function Page() {
   const handleGoogleLogin = () => handleLogin(new GoogleAuthProvider());
   const handleGithubLogin = () => handleLogin(new GithubAuthProvider());
 
+ 
   return (
     <div className="pl-[90px] flex items-center justify-center min-h-screen bg-gray-100">
       <Card className="w-[300px] flex flex-col items-center justify-center min-h-screen">
