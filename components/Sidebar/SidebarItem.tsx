@@ -9,7 +9,7 @@ interface Props {
 }
 
 const SidebarItem = ({ icon, text, href, isOpen }: Props) => {
-  const commonClasses = `flex items-center space-x-4 w-full px-6 py-4 rounded-xl hover:bg-purple-500 hover:text-white ${
+  const commonClasses = `flex items-center space-x-4 w-full px-6 py-4 rounded-xl hover:bg-zinc-900 hover:text-white ${
     !isOpen && "justify-center"
   }`;
 

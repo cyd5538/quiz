@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useToast } from "../ui/use-toast";
+import Link from "next/link";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useLocalStorage('sidebar', false)
@@ -46,24 +47,22 @@ const Sidebar = () => {
 
   return (
     <header
-      className={`fixed left-0 top-0 h-screen bg-purple-600 text-white transition-all duration-300 ${
-        isOpen ? "w-[250px]" : "w-[90px]"
+      className={`fixed left-0 top-0 h-screen bg-zinc-800 text-white transition-all duration-300 ${
+        isOpen ? "w-[250px]" : "w-[110px]"
       }`}
     >
       <Button
         variant="ghost"
-        className="absolute -right-4 top-4 bg-purple-900 text-white"
+        className="absolute -right-4 top-4 bg-zinc-950 text-white"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <ChevronLeft /> : <ChevronRight />}
       </Button>
-      <nav className="flex flex-col items-center justify-center ml-2 mr-2 space-y-4 pt-20">
-        <SidebarItem
-          icon={<Home size={24} />}
-          text="Home"
-          href="/"
-          isOpen={isOpen}
-        />
+      <nav className="flex flex-col items-start justify-center ml-2 mr-2 space-y-4 pt-20">
+        <Link className={`cursor-pointer text-2xl font-bold mb-12 mt-4 hover:text-gray-100 ${isOpen ? "pl-6" : "pl-2"}`} href="/">
+          QuizAI
+        </Link>
+
         {/* 로그인 했을 때 */}
         {user?.displayName && 
         <>

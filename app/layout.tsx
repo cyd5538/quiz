@@ -24,7 +24,7 @@ export default function RootLayout({
         <Toaster />
         <AuthStateManager />
         <Sidebar />
-        <div className="pl-[95px]">
+        <div className="pl-[110px]">
           {children}
         </div>
       </body>
