@@ -39,7 +39,7 @@ const CreateQuizForm: React.FC = () => {
     setShowDropZone(true);
   };
 
-  const saveQuiz = async (quizData: any, userId: string) => {
+  const saveQuiz = async (quizData: any) => {
     try {
       setIsLoading(true);
       let thumbnailURL = "";
@@ -50,12 +50,19 @@ const CreateQuizForm: React.FC = () => {
       const quizRef = await addDoc(collection(db, "quizzes"), {
         title: quizTitle,
         thumbnail: thumbnailURL,
-        creator: userId,
+        creator: {
+          id: user?.uid,
+          displayName: user?.displayName,
+          profileImage: user?.photoURL
+        },
         createdAt: serverTimestamp(),
         likes: 0,
+        commentCount: 0,
+        viewCount: 0,
         questions: quizData,
         participants: [],
-      });
+        difficulty
+      }); 
 
       return quizRef.id;
     } catch (error) {
@@ -88,7 +95,7 @@ const CreateQuizForm: React.FC = () => {
       const jsonString = response.data.quiz.replace(/```json\n|```/g, "");
       const quizData = JSON.parse(jsonString);
       setQuiz(quizData);
-      const quizId = await saveQuiz(quizData, user?.uid as string);
+      const quizId = await saveQuiz(quizData);
 
       router.push(`/quiz/${quizId}`);
     } catch (error:any) {
@@ -105,7 +112,7 @@ const CreateQuizForm: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="absolute -z-10 top-0 w-full h-full flex justify-center items-center">
+      <div className="flex-1 w-full h-full flex justify-center items-center">
         <Loading
           borderRadius="1.75rem"
           className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
