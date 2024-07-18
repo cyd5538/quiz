@@ -117,7 +117,7 @@ const CreateQuizForm: React.FC = () => {
   }
 
   return (
-    <main className="max-w-3xl min-w-[350px] mx-auto bg-white shadow-sm rounded-lg">
+    <main className="lg:w-[900px] md:w-[600px] w-[330px] mt-24 mx-auto bg-white shadow-sm rounded-lg">
       <h1 className="text-3xl font-semibold mb-12 text-left text-gray-800">
         Create Your Quiz
       </h1>
@@ -135,7 +135,7 @@ const CreateQuizForm: React.FC = () => {
         <DifficultySelector difficulty={difficulty} setDifficulty={setDifficulty} />
         <Button
           onClick={handleCreateQuiz}
-          className="w-full bg-purple-700 text-white py-2 px-4 rounded-md hover:bg-blue-900 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          className="w-full bg-zinc-700 text-white py-8 px-4 rounded-md hover:bg-zinc-900 text-xl transition duration-200 ease-in-out focus:outline-none "
         >
           Create Quiz
         </Button>
