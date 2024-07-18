@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
-interface DropZoneProps {
+interface Props {
   onFileUploaded: (file: File) => void;
 }
 
-const DropZone: React.FC<DropZoneProps> = ({ onFileUploaded }) => {
+const ImageDropZone: React.FC<Props> = ({ onFileUploaded }) => {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (acceptedFiles[0]) {
@@ -35,4 +35,4 @@ const DropZone: React.FC<DropZoneProps> = ({ onFileUploaded }) => {
   );
 };
 
-export default DropZone;
+export default ImageDropZone;
