@@ -47,7 +47,7 @@ const Sidebar = () => {
 
   return (
     <header
-      className={`fixed left-0 top-0 h-screen bg-zinc-800 text-white transition-all duration-300 ${
+      className={`fixed left-0 top-0 h-screen z-10 bg-zinc-800 text-white transition-all duration-300 ${
         isOpen ? "w-[250px]" : "w-[110px]"
       }`}
     >
