@@ -47,11 +47,11 @@ export function QuizLists({ quiz }: Props) {
         </CardTitle>
         <div className="flex flex-col items-center">
           <Image 
-            src={quiz.creator.profileImage}
+            src={quiz.creator.profileImage ? quiz.creator.profileImage : "/baseprofile.png"}
             width={45}
             height={45}
             alt={quiz.creator.displayName}
-            className="rounded-full mb-2"
+            className="rounded-full mb-2 bg-white border-1 border-black"
           />
           <span className="text-sm">{quiz.creator.displayName}</span>
         </div>
