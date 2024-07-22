@@ -2,21 +2,21 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import userStore from "@/stores/userStore";
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { uploadFile } from "@/lib/firestore";
-import QuizTitleInput from './QuizTitleInput';
-import ThumbnailUploader from './ThumbnailUploader';
-import TopicSelector from './TopicSelector';
-import DifficultySelector from './DifficultySelector';
-import SubTopicInput from './SubTopicInput';
-import { Button } from '@/components/ui/button';
-import { Loading } from '../ui/Loading';
+import QuizTitleInput from "./QuizTitleInput";
+import ThumbnailUploader from "./ThumbnailUploader";
+import TopicSelector from "./TopicSelector";
+import DifficultySelector from "./DifficultySelector";
+import SubTopicInput from "./NumberQuestionSelect";
+import { Button } from "@/components/ui/button";
+import { Loading } from "../ui/Loading";
 
 const CreateQuizForm: React.FC = () => {
   const [topic, setTopic] = useState<string>("");
   const [difficulty, setDifficulty] = useState<string>("");
-  const [subTopic, setSubTopic] = useState<string>("");
+  const [numberQuestions, setNumberQuestions] = useState<string>("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [showDropZone, setShowDropZone] = useState<boolean>(true);
@@ -46,14 +46,14 @@ const CreateQuizForm: React.FC = () => {
       if (thumbnail) {
         thumbnailURL = await uploadFile(thumbnail);
       }
-      
+
       const quizRef = await addDoc(collection(db, "quizzes"), {
         title: quizTitle,
         thumbnail: thumbnailURL,
         creator: {
           id: user?.uid,
           displayName: user?.displayName,
-          profileImage: user?.photoURL
+          profileImage: user?.photoURL,
         },
         createdAt: serverTimestamp(),
         likes: 0,
@@ -61,8 +61,8 @@ const CreateQuizForm: React.FC = () => {
         viewCount: 0,
         questions: quizData,
         participants: [],
-        difficulty
-      }); 
+        difficulty,
+      });
 
       return quizRef.id;
     } catch (error) {
@@ -72,24 +72,18 @@ const CreateQuizForm: React.FC = () => {
       setIsLoading(false);
     }
   };
-
+  
   const handleCreateQuiz = async () => {
-    if(!topic || !difficulty || !quizTitle || !thumbnail) {
+    if (!topic || !difficulty || !quizTitle || !thumbnail || !numberQuestions) {
       return alert("Please fill in the fields");
     }
-
-    if(topic === "people" || topic === "sports") {
-      if(!subTopic) {
-        return alert("Please fill in the fields");
-      }
-    } 
 
     setIsLoading(true);
     try {
       const response = await axios.post("/api/generate", {
         topic,
         difficulty,
-        setSubTopic: topic === "people" || topic === "sports" ? subTopic : undefined,
+        numberQuestions
       });
 
       const jsonString = response.data.quiz.replace(/```json\n|```/g, "");
@@ -98,7 +92,7 @@ const CreateQuizForm: React.FC = () => {
       const quizId = await saveQuiz(quizData);
 
       router.push(`/quiz/${quizId}`);
-    } catch (error:any) {
+    } catch (error: any) {
       console.error("Error creating quiz:", error);
       alert(
         `An error occurred while creating the quiz.: ${
@@ -115,7 +109,7 @@ const CreateQuizForm: React.FC = () => {
       <div className="flex-1 w-full h-full flex justify-center items-center">
         <Loading
           borderRadius="1.75rem"
-          className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+          className="bg-white dark:bg-slate-900 text-2xl text-black dark:text-white border-neutral-200 dark:border-slate-800"
         >
           Creating...
         </Loading>
@@ -138,8 +132,14 @@ const CreateQuizForm: React.FC = () => {
           clearThumbnail={clearThumbnail}
         />
         <TopicSelector topic={topic} setTopic={setTopic} />
-        <SubTopicInput topic={topic} subTopic={subTopic} setSubTopic={setSubTopic} />
-        <DifficultySelector difficulty={difficulty} setDifficulty={setDifficulty} />
+        <SubTopicInput
+          numberQuestions={numberQuestions}
+          setNumberQuestions={setNumberQuestions}
+        />
+        <DifficultySelector
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+        />
         <Button
           onClick={handleCreateQuiz}
           className="w-full bg-zinc-700 text-white py-8 px-4 rounded-md hover:bg-zinc-900 text-xl transition duration-200 ease-in-out focus:outline-none "

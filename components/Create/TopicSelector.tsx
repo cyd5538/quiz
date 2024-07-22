@@ -18,7 +18,7 @@ const TopicSelector: React.FC<Props> = ({ topic, setTopic }) => (
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {['History', 'People', 'Geography', 'Sports', 'World Capitals'].map((item) => (
+          {['History', 'People', 'Geography', 'Sports', 'World Capitals','Music','Politics','Movies'].map((item) => (
             <SelectItem key={item} value={item.toLowerCase()}>
               {item}
             </SelectItem>
