@@ -7,18 +7,21 @@ import userStore from "@/stores/userStore";
 
 export default function AuthStateManager() {
   const setUser = userStore((state) => state.setUser);
+  const setLoading = userStore((state) => state.setLoading);
 
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
         setUser(firebaseUser);
       } else {
         setUser(null);
       }
+      setLoading(false);
     });
 
     return () => unsubscribe();
-  }, [setUser]);
+  }, [setUser, setLoading]);
 
-  return null; 
+  return null;
 }

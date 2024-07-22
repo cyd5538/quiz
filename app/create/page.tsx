@@ -4,12 +4,16 @@ import CreateQuizForm from "@/components/Create/CreateQuizForm";
 import userStore from "@/stores/userStore";
 import { useRouter } from "next/navigation";
 
-export default function Home() {
-  const { user } = userStore();
+export default function CreatePage() {
+  const { user, loading } = userStore();
   const router = useRouter();
-  
-  if(!user) {
-    router.push("/")
+
+  if (loading) {
+    return <div></div>; 
+  }
+
+  if (!user) {
+    router.push("/");
     return null;
   }
 

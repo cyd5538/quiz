@@ -26,7 +26,7 @@ const CreateQuizForm: React.FC = () => {
 
   const router = useRouter();
   const { user } = userStore();
-
+  console.log(user)
   const handleFileUpload = (file: File) => {
     setThumbnail(file);
     setThumbnailPreview(URL.createObjectURL(file));
