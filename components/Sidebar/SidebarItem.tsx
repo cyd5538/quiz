@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button"; 
+import { usePathname } from "next/navigation";
 
 interface Props {
   icon: React.ReactNode;
@@ -9,7 +12,10 @@ interface Props {
 }
 
 const SidebarItem = ({ icon, text, href, isOpen }: Props) => {
-  const commonClasses = `flex items-center space-x-4 w-full px-6 py-4 rounded-xl hover:bg-zinc-900 hover:text-white ${
+  const params = usePathname();
+  const param = params.replace(/^\//, "");
+  console.log(param, text)
+  const commonClasses = `${param.toLowerCase() === text.toLowerCase() && "bg-white text-zinc-950"} flex items-center space-x-4 w-full px-6 py-4 rounded-xl hover:bg-zinc-900 hover:text-white ${
     !isOpen && "justify-center"
   }`;
 
@@ -24,7 +30,7 @@ const SidebarItem = ({ icon, text, href, isOpen }: Props) => {
     return (
       <button
         onClick={href}
-        className={`${commonClasses} bg-transparent hover:bg-purple-500`}
+        className={`${commonClasses} bg-transparent`}
       >
         {icon}
         {isOpen && <span className="text-lg">{text}</span>}
