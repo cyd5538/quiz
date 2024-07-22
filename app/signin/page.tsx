@@ -1,6 +1,7 @@
 "use client";
 
 import OauthSign from "@/components/Sign/OauthSign";
+import Signin from "@/components/Sign/Signin";
 import Signup from "@/components/Sign/Signup";
 import {
   Card,
@@ -15,14 +16,14 @@ export default function Page() {
     <div className="flex items-center justify-center min-h-screen bg-zinc-100">
       <Card className="sm:w-[600px] w-full flex flex-col items-center justify-center min-h-screen">
         <CardHeader className="flex justify-start w-72 px-0 mb-4">
-          <CardTitle className="text-4xl">Sign up</CardTitle>
+          <CardTitle className="text-4xl">Sign in</CardTitle>
         </CardHeader>
         <CardContent>
-          <Signup />
+          <Signin />
           <OauthSign />
         </CardContent>
-        <Link href="/signin">
-          <p className="text-gray-500 underline hover:text-gray-700">Already a member?</p>
+        <Link href="/signup">
+          <p className="text-gray-500 underline hover:text-gray-700">Don't have an account?</p>
         </Link>
       </Card>
     </div>
