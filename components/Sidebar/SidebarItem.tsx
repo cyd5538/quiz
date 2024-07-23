@@ -14,7 +14,7 @@ interface Props {
 const SidebarItem = ({ icon, text, href, isOpen }: Props) => {
   const params = usePathname();
   const param = params.replace(/^\//, "");
-  console.log(param, text)
+
   const commonClasses = `${param.toLowerCase() === text.toLowerCase() && "bg-white text-zinc-950"} flex items-center space-x-4 w-full px-6 py-4 rounded-xl hover:bg-zinc-900 hover:text-white ${
     !isOpen && "justify-center"
   }`;

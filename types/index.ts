@@ -1,17 +1,24 @@
 export interface QuizQuestion {
   question: string;
+  questionEng: string;
   options: string[];
+  optionsEng: string[];
   correctAnswer: string;
+  explanation:string;
+  difficulty: string;
+  explanationEng: string
 }
 
 export interface Quiz {
-  id: string;
-  title: string;
+  commentCount: number;
   creator: {
     displayName: string;
     id: string;
     profileImage: string;
   };
+  title: string;
+  difficulty: string
+  id: string;
   createdAt: {
     seconds: number;
     nanoseconds: number;
@@ -19,9 +26,11 @@ export interface Quiz {
   likes: number;
   participants: string[]; 
   questions: QuizQuestion[]; 
+  optionsEng: QuizQuestion[]; 
   thumbnail: string;
   viewCount: number;
-  commentCount: number;
-  difficulty: string;
+  results: {
+    [key: string]: any;
+  }
 }
 
