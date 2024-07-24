@@ -3,6 +3,7 @@ import { db } from "@/lib/firebase";
 import userStore from "@/stores/userStore";
 import { Quiz } from "@/types";
 import { arrayUnion, doc, updateDoc, getDoc } from "firebase/firestore";
+import { QuizTotalDashboard } from "./QuizTotalDashboard";
 
 interface Props {
   quiz: Quiz;
@@ -10,7 +11,7 @@ interface Props {
   totalQuestions: number;
 }
 
-const QuizResult = ({ quiz, score, totalQuestions }: Props) => {
+const QuizTotalResult = ({ quiz, score, totalQuestions }: Props) => {
   const { user } = userStore();
 
   const updateQuizParticipants = async () => {
@@ -60,13 +61,12 @@ const QuizResult = ({ quiz, score, totalQuestions }: Props) => {
     updateViewCounts();
     updateAnswerResult();
   }, []);
-
+  
   return (
     <div>
-      <h2>Quiz Results</h2>
-      <p>맞은 문제: {score} / {totalQuestions}</p>
+      <QuizTotalDashboard quiz={quiz}/>
     </div>
   );
 };
 
-export default QuizResult;
+export default QuizTotalResult;

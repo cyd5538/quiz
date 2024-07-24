@@ -5,7 +5,7 @@ import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Quiz } from "@/types";
 import Question from "@/components/Quiz/Question";
-import QuizResult from "@/components/Quiz/QuizTotalResult";
+import QuizResult from "@/components/Quiz/QuizTotal";
 import userStore from "@/stores/userStore";
 import { useToast } from "@/components/ui/use-toast";
 import { Loading } from "@/components/ui/Loading";
