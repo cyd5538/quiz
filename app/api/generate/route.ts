@@ -30,16 +30,18 @@ export async function POST(req: NextRequest) {
 
 Create ${numberQuestions} quiz questions about ${topic} at ${difficulty} difficulty level. All questions must consistently be at the ${difficulty} level. Return the results as an array of JSON objects with the following structure:
 
-{
- "question": "Question text in Korean",
- "questionEng": "Question text in English",
- "difficulty": "${difficulty}",
- "options": ["A. Korean Option 1", "B. Korean Option 2", "C. Korean Option 3", "D. Korean Option 4"],
- "optionsEng": ["A. English Option 1", "B. English Option 2", "C. English Option 3", "D. English Option 4"],
- "correctAnswer": "Correct option letter (A, B, C, or D)",
- "explanation": "Detailed explanation of the answer in Korean",
- "explanationEng": "Detailed explanation of the answer in English"
-}
+[
+  {
+    "question": "Question text in Korean",
+    "questionEng": "Question text in English",
+    "difficulty": "${difficulty}",
+    "options": ["A. Korean Option 1", "B. Korean Option 2", "C. Korean Option 3", "D. Korean Option 4"],
+    "optionsEng": ["A. English Option 1", "B. English Option 2", "C. English Option 3", "D. English Option 4"],
+    "correctAnswer": "Correct option letter (A, B, C, or D)",
+    "explanation": "Detailed explanation of the answer in Korean",
+    "explanationEng": "Detailed explanation of the answer in English"
+  }
+]
 
 Please maintain this JSON structure and ensure all questions, options, and explanations are in Korean and English. The response must be a valid JSON array that can be parsed directly. Return a JSON object with an "error" key and the error message as the value if ${topic} is a typo, missing word, unknown person, or unknown sport.
 
@@ -56,17 +58,16 @@ Important instructions:
 
 Example output for topic 'history':
 [
- {
- "question": "세종대왕이 훈민정음을 창제한 해는?",
- "questionEng": "In what year did King Sejong create the Korean script, Hangul?",
- "difficulty": "medium",
- "options": ["A. 1433년", "B. 1443년", "C. 1453년", "D. 1463년"],
- "optionsEng": ["A. 1433", "B. 1443", "C. 1453", "D. 1463"],
- "correctAnswer": "B",
- "explanation": "세종대왕은 1443년에 훈민정음을 창제하여 1446년에 반포하였습니다.",
- "explanationEng": "King Sejong created Hangul in 1443 and promulgated it in 1446."
- },
- ...
+  {
+    "question": "세종대왕이 훈민정음을 창제한 해는?",
+    "questionEng": "In what year did King Sejong create the Korean script, Hangul?",
+    "difficulty": "medium",
+    "options": ["A. 1433년", "B. 1443년", "C. 1453년", "D. 1463년"],
+    "optionsEng": ["A. 1433", "B. 1443", "C. 1453", "D. 1463"],
+    "correctAnswer": "B",
+    "explanation": "세종대왕은 1443년에 훈민정음을 창제하여 1446년에 반포하였습니다.",
+    "explanationEng": "King Sejong created Hangul in 1443 and promulgated it in 1446."
+  }
 ]`;
 
     const result = await model.generateContent(prompt);
