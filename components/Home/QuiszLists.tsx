@@ -14,7 +14,7 @@ interface Props {
 const QuizList = ({ tabmenu }: Props) => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
-  console.log(quizzes)
+
   useEffect(() => {
     const fetchQuizzes = async () => {
       setLoading(true);
@@ -50,7 +50,7 @@ const QuizList = ({ tabmenu }: Props) => {
 
   if (loading) {
     return (
-      <div className="absolute -z-10 top-0 w-full h-full flex justify-center items-center">
+      <div className="w-full h-[700px] flex justify-center items-center">
         <Loading
           borderRadius="1.75rem"
           className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"

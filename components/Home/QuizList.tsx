@@ -2,33 +2,37 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Quiz } from "@/types";
 import { Eye, Heart, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { format } from 'date-fns';
 
 interface Props {
   quiz: Quiz
+}
+
+interface Timestamp {
+  seconds: number;
+  nanoseconds: number;
 }
 
 export function QuizLists({ quiz }: Props) {
   const truncateTitle = (title: string, maxLength: number) => {
     return title.length > maxLength ? `${title.slice(0, maxLength)}...` : title;
   };
+
+  const formatTimestamp = (timestamp: Timestamp): string => {
+    const milliseconds = timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000);
+    const date = new Date(milliseconds);
+    return format(date, "yyyy-MM-dd HH:mm");
+  };
+
+  const formatDate = formatTimestamp(quiz.createdAt);
 
   return (
     <Card className="max-w-[350px] w-full">
@@ -42,9 +46,12 @@ export function QuizLists({ quiz }: Props) {
         />
       </CardContent>
       <CardHeader className="h-28 bg-zinc-100 flex flex-row items-center mb-2 p-4">
-        <CardTitle className="flex-1 text-lg font-bold">
-          {truncateTitle(quiz.title, 24)}
-        </CardTitle>
+        <div className="flex-1 flex flex-col gap-2">
+          <CardTitle className="text-lg font-bold">
+            {truncateTitle(quiz.title, 24)}
+          </CardTitle>
+          <p className="text-sm text-gray-400">{formatDate}</p>
+        </div>
         <div className="flex flex-col items-center">
           <Image 
             src={quiz.creator.profileImage ? quiz.creator.profileImage : "/baseprofile.png"}
@@ -66,7 +73,7 @@ export function QuizLists({ quiz }: Props) {
           </Link>
         </Button>
       </CardFooter>
-      <div className="flex justify-between items-center h-12 p-6 b border-t-[1px] border-zinc-95s0">
+      <div className="flex justify-between items-center h-12 p-6 border-t-[1px] border-zinc-950">
         <p className="flex justify-center items-center gap-[4px]">
           <Heart size={24} color="black" fill="red" /> {quiz.likes}
         </p>
