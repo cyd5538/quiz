@@ -30,7 +30,7 @@ export interface Quiz {
   thumbnail: string;
   viewCount: number;
   results: {
-    [key: string]: any;
+    [key: string]: number;
   }
 }
 
