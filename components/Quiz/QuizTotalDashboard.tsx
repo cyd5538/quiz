@@ -2,13 +2,14 @@ import React from "react";
 import { BentoGrid, BentoGridItem } from "../ui/bento-grid";
 import CustomBarChart from "./CustomChart";
 import { Quiz } from "@/types";
+import QuizTotalUserResult from "./QuizTotalUserResult";
 
 interface Props {
   quiz: Quiz;
 }
 
 export function QuizTotalDashboard({ quiz }: Props) {
-  console.log(quiz)
+
   const items = [
     {
       title: `Problem Statistics Total ${quiz.participants.length} participants`,
@@ -17,9 +18,9 @@ export function QuizTotalDashboard({ quiz }: Props) {
       className: "md:col-span-2",
     },
     {
-      title: "The Digital Revolution",
-      description: "Dive into the transformative power of technology.",
-      header: <Skeleton />,
+      title: "User Quiz Results",
+      description: "Here is your grade for this quiz",
+      header: <QuizTotalUserResult quizData={quiz?.results} participantLen={quiz?.participants.length}/>,
       className: "md:col-span-1",
     },
     {
