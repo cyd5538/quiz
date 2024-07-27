@@ -20,7 +20,7 @@ export function QuizTotalDashboard({ quiz }: Props) {
     {
       title: "User Quiz Results",
       description: "Here is your grade for this quiz",
-      header: <QuizTotalUserResult quizData={quiz?.results} participantLen={quiz?.participants.length}/>,
+      header: <QuizTotalUserResult quizData={quiz?.results} participantLen={quiz?.questions.length}/>,
       className: "md:col-span-1",
     },
     {
