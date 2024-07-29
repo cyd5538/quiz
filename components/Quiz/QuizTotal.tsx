@@ -43,7 +43,7 @@ const QuizTotalResult = ({ quiz, score, totalQuestions }: Props) => {
           if (!currentResults[user.email]) {
             updatedData.results = {
               ...currentResults,
-              [user.displayName as string]: score,
+              [user.email as string]: score,
             };
           }
 

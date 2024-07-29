@@ -56,7 +56,7 @@ export default function Home({ params }: Props) {
 
   // 이미 참여했으면 결과페이지로
   useEffect(() => {
-    if (quiz?.results && quiz?.results.hasOwnProperty(user?.displayName as string)) {
+    if (quiz?.results && quiz?.results.hasOwnProperty(user?.email as string)) {
       setShowResult(true);
     }
   }, [quiz]);

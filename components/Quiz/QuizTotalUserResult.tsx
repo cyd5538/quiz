@@ -13,7 +13,7 @@ interface Props {
 
 const QuizTotalUserResult = ({ quizData, participantLen }: Props) => {
   const { user } = userStore();
-  const set = quizData[user?.displayName as string];
+  const set = quizData[user?.email as string];
 
   return (
     <div>
