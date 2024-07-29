@@ -114,9 +114,6 @@ export default function Home({ params }: Props) {
 
     try {
       await addDoc(collection(db, "quizResults"), quizResult);
-      toast({
-        title: "Your quiz results have been saved.",
-      });
       setShowResult(true);
     } catch (error) {
       console.error("Error saving quiz results:", error);
@@ -127,10 +124,10 @@ export default function Home({ params }: Props) {
     }
   };
 
-  if (!user) {
-    router.push("/");
-    return null;
-  }
+  // if (!user) {
+  //   router.push("/");
+  //   return null;
+  // }
 
   if (loading) {
     return (
@@ -139,8 +136,6 @@ export default function Home({ params }: Props) {
       </p>
     );
   }
-
-  console.log(incorrect)
 
   return (
     <main className="flex-1 mx-auto 2xl:w-[1440px] w-full mt-32">

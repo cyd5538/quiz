@@ -3,6 +3,7 @@ import { BentoGrid, BentoGridItem } from "../ui/bento-grid";
 import CustomBarChart from "./CustomChart";
 import { Quiz } from "@/types";
 import QuizTotalUserResult from "./QuizTotalUserResult";
+import QuizTotalInCorrect from "./QuizTotalInCorrect";
 
 interface Props {
   quiz: Quiz;
@@ -24,9 +25,9 @@ export function QuizTotalDashboard({ quiz }: Props) {
       className: "md:col-span-1",
     },
     {
-      title: "The Art of Design",
-      description: "Discover the beauty of thoughtful and functional design.",
-      header: <Skeleton />,
+      title: "Incorrect Answers",
+      description: "Collection of my wrong answers",
+      header: <QuizTotalInCorrect id={quiz.id}/>,
       className: "md:col-span-1",
     },
     {

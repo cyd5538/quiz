@@ -7,6 +7,7 @@ export interface QuizQuestion {
   explanation:string;
   difficulty: string;
   explanationEng: string
+  userAnswer: string
 }
 
 export interface Quiz {
@@ -34,3 +35,14 @@ export interface Quiz {
   }
 }
 
+export interface QuizResult {
+  id: string;
+  quizId: string;
+  quizTitle: string;
+  score: number;
+  totalQuestions: number;
+  userEmail: string;
+  userId: string;
+  userName: string;
+  question: QuizQuestion[];
+}
