@@ -75,7 +75,7 @@ const QuizTotalInCorrect = ({ id }: Props) => {
     <div className="w-full h-full p-4 flex justify-center items-center">
       {incorrectQuestions.length > 0 ? (
         <div className="w-full">
-          <Carousel className="w-full h-full">
+          <Carousel className="w-[100%] h-[450px] overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
             <CarouselContent className="h-full">
               {incorrectQuestions.map((question, index) => (
                 <CarouselItem key={index} className="h-[100%] flex items-center justify-center">
