@@ -1,21 +1,24 @@
+import userStore from "@/stores/userStore";
 import { QuizComment } from "@/types";
 import React from "react";
+import QuizTotalCommentListItem from "./QuizTotalCommentListItem";
 
 interface Props {
-  comments: QuizComment[]
+  comments: QuizComment[];
+  loadComments: (page: number) => Promise<void>;
+  currentPage: number;
 }
 
-const QuizTotalCommentList = ({comments}:Props) => {
+const QuizTotalCommentList = ({ comments, currentPage, loadComments }: Props) => {
   return (
     <div className="space-y-4 mb-4">
       {comments.map((comment) => (
-        <div key={comment.id} className="p-3 rounded shadow w-full">
-          <p className="text-sm">{comment.text}</p>
-          <small className="text-gray-500 text-sm inline-block text-right w-full">
-            {comment.createdAt.toDate().toLocaleString()} -
-            {comment.authorEmail}
-          </small>
-        </div>
+        <QuizTotalCommentListItem
+          key={comment.id}
+          comment={comment}
+          loadComments={loadComments}
+          currentPage={currentPage}
+        />
       ))}
     </div>
   );

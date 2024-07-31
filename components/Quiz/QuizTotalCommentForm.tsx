@@ -20,6 +20,7 @@ const QuizTotalCommentForm = ({
   loadComments,
 }: Props) => {
   const { user } = userStore();
+  
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newComment.trim() === "" || !quiz?.id || !user) return;

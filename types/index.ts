@@ -40,6 +40,8 @@ export interface QuizComment {
   text: string;
   createdAt: Timestamp;
   author: string; 
+  authorId: string; 
+  quizId: string; 
   authorEmail: string; 
 }
 

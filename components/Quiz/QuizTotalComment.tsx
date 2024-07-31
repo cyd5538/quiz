@@ -101,7 +101,11 @@ const QuizTotalComment: React.FC<Props> = ({ quiz }) => {
         quiz={quiz}
         loadComments={loadComments}
       />
-      <QuizTotalCommentList comments={comments} />
+      <QuizTotalCommentList 
+        comments={comments} 
+        loadComments={loadComments} 
+        currentPage={currentPage}
+      />
       <QuizTotalCommentPagenation
         currentPage={currentPage}
         loadComments={loadComments}
