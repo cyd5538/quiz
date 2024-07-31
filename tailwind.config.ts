@@ -21,6 +21,14 @@ const config = {
       },
     },
     extend: {
+      extend: {
+        gridTemplateRows: {
+          'custom': 'auto auto auto auto',
+        },
+        gridAutoRows: {
+          'minmax': 'minmax(0, auto)',
+        },
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

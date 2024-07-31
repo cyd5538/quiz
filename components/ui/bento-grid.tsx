@@ -10,7 +10,8 @@ export const BentoGrid = ({
   return (
     <div
       className={cn(
-        "grid grid-rows-[24rem_36rem_36rem_18rem] gap-8 grid-cols-1 md:grid-cols-3  max-w-7xl mx-auto",
+        "grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 max-w-7xl mx-auto",
+        "grid-rows-[auto_auto_auto_auto]",  // 각 행의 높이를 자동으로 설정
         className
       )}
     >
