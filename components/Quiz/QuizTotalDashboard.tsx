@@ -4,6 +4,7 @@ import CustomBarChart from "./CustomChart";
 import { Quiz } from "@/types";
 import QuizTotalUserResult from "./QuizTotalUserResult";
 import QuizTotalInCorrect from "./QuizTotalInCorrect";
+import QuizTotalComment from "./QuizTotalComment";
 
 interface Props {
   quiz: Quiz;
@@ -31,15 +32,15 @@ export function QuizTotalDashboard({ quiz }: Props) {
       className: "md:col-span-1",
     },
     {
-      title: "The Power of Communication",
+      title: "Comment",
       description: "Understand the impact of effective communication in our lives.",
-      header: <Skeleton />,
+      header: <QuizTotalComment quiz={quiz}/>,
       className: "md:col-span-2",
     },
   ];
 
   return (
-    <BentoGrid className="w-full mx-auto md:auto-rows-[20rem]">
+    <BentoGrid className="w-full mx-auto md:auto-rows-[20rem] pb-12">
       {items.map((item, i) => (
         <BentoGridItem
           key={i}
@@ -52,7 +53,3 @@ export function QuizTotalDashboard({ quiz }: Props) {
     </BentoGrid>
   );
 }
-
-const Skeleton = () => (
-  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl dark:bg-dot-white/[0.2] bg-dot-black/[0.2] [mask-image:radial-gradient(ellipse_at_center,white,transparent)]  border border-transparent dark:border-white/[0.2] bg-neutral-100 dark:bg-black"></div>
-);

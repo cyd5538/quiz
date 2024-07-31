@@ -1,7 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { doc, getDoc, updateDoc, arrayUnion, addDoc, collection } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  addDoc,
+  collection,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Quiz, QuizQuestion } from "@/types";
 import Question from "@/components/Quiz/Question";
@@ -10,6 +17,7 @@ import userStore from "@/stores/userStore";
 import { useToast } from "@/components/ui/use-toast";
 import { Loading } from "@/components/ui/Loading";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Props {
   params: { slug: string[] };
@@ -22,7 +30,7 @@ interface IncorrectAnswer extends QuizQuestion {
 export default function Home({ params }: Props) {
   const id = params.slug[0];
   const [quiz, setQuiz] = useState<Quiz | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [quizLoading, setQuizLoading] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
@@ -31,7 +39,7 @@ export default function Home({ params }: Props) {
   const [answered, setAnswered] = useState(false);
   const [incorrect, setIncorrect] = useState<IncorrectAnswer[]>([]);
 
-  const { user } = userStore();
+  const { user, loading } = userStore();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -47,7 +55,7 @@ export default function Home({ params }: Props) {
       } catch (err) {
         console.error(err);
       } finally {
-        setLoading(false);
+        setQuizLoading(false);
       }
     }
 
@@ -63,11 +71,11 @@ export default function Home({ params }: Props) {
 
   const handleAnswer = (answer: string) => {
     const currentQuestion = quiz!.questions[currentQuestionIndex];
-    const isCorrect = answer.slice(0,1) === currentQuestion.correctAnswer;
+    const isCorrect = answer.slice(0, 1) === currentQuestion.correctAnswer;
     if (!isCorrect) {
       const incorrectAnswer: IncorrectAnswer = {
         ...currentQuestion,
-        userAnswer: answer
+        userAnswer: answer,
       };
       setIncorrect((prev) => [...prev, incorrectAnswer]);
     } else {
@@ -93,7 +101,7 @@ export default function Home({ params }: Props) {
       setShowExplanation(false);
       setAnswered(false);
     } else {
-      saveQuizResults()
+      saveQuizResults();
     }
   };
 
@@ -109,7 +117,7 @@ export default function Home({ params }: Props) {
       score: score,
       totalQuestions: quiz.questions.length,
       timestamp: new Date(),
-      question: incorrect
+      question: incorrect,
     };
 
     try {
@@ -123,13 +131,8 @@ export default function Home({ params }: Props) {
       });
     }
   };
-
-  // if (!user) {
-  //   router.push("/");
-  //   return null;
-  // }
-
-  if (loading) {
+  
+  if (loading || quizLoading) {
     return (
       <p className="w-full h-screen flex justify-center items-center">
         <Loading className="bg-white text-black">Loading...</Loading>;
@@ -137,9 +140,15 @@ export default function Home({ params }: Props) {
     );
   }
 
+  if (!user) {
+    router.push("/");
+    return null;
+  }
+
   return (
-    <main className="flex-1 mx-auto 2xl:w-[1440px] w-full mt-32">
+    <main className="pl-2 flex-1 mx-auto 2xl:w-[1440px] w-full mt-32">
       <h1 className="sm:text-3xl text-xl font-semibold">{quiz?.title}</h1>
+
       {quiz && (
         <div>
           {!showResult ? (

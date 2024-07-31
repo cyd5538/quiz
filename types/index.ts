@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 export interface QuizQuestion {
   question: string;
   questionEng: string;
@@ -20,19 +22,25 @@ export interface Quiz {
   title: string;
   difficulty: string
   id: string;
-  createdAt: {
-    seconds: number;
-    nanoseconds: number;
-  };
+  createdAt: Timestamp
   likes: number;
   participants: string[]; 
   questions: QuizQuestion[]; 
   optionsEng: QuizQuestion[]; 
   thumbnail: string;
+  comments: QuizComment[]
   viewCount: number;
   results: {
     [key: string]: number;
   }
+}
+
+export interface QuizComment {
+  id: string;
+  text: string;
+  createdAt: Timestamp;
+  author: string; 
+  authorEmail: string; 
 }
 
 export interface QuizResult {
