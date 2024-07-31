@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, increment, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import React from "react";
 import userStore from "@/stores/userStore";
@@ -23,15 +23,25 @@ const QuizTotalCommentForm = ({
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newComment.trim() === "" || !quiz?.id || !user) return;
-
+  
     try {
-      const commentsRef = collection(db, "quizzes", quiz.id, "comments");
+      // 새로운 'comments' 컬렉션에 댓글 추가
+      const commentsRef = collection(db, "comments");
       await addDoc(commentsRef, {
+        quizId: quiz.id,  // 퀴즈 ID 추가
         text: newComment,
-        createdAt: new Date(),
+        createdAt: serverTimestamp(),
         author: user.displayName,
         authorEmail: user.email,
+        authorId: user.uid  // 사용자 ID 추가 (선택사항)
       });
+  
+      // 퀴즈 문서의 댓글 카운트 업데이트
+      const quizRef = doc(db, "quizzes", quiz.id);
+      await updateDoc(quizRef, {
+        commentCount: increment(1)
+      });
+  
       setNewComment("");
       loadComments(1);
     } catch (error) {
