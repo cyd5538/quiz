@@ -18,6 +18,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Loading } from "@/components/ui/Loading";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import QuizInfo from "@/components/Quiz/QuizInfo";
 
 interface Props {
   params: { slug: string[] };
@@ -144,11 +145,10 @@ export default function Home({ params }: Props) {
     router.push("/");
     return null;
   }
-
+  console.log(quiz)
   return (
     <main className="pl-2 flex-1 mx-auto 2xl:w-[1440px] w-full mt-32">
-      <h1 className="sm:text-3xl text-xl font-semibold">{quiz?.title}</h1>
-
+      <QuizInfo quiz={quiz}/>
       {quiz && (
         <div>
           {!showResult ? (
