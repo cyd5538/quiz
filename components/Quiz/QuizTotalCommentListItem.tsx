@@ -2,8 +2,7 @@ import React from "react";
 import userStore from "@/stores/userStore";
 import { QuizComment } from "@/types";
 import { QuizTotalCommentDelbtn } from "./QuizTotalCommentDelbtn";
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { QuizTotalCommentUpdatebtn } from "./QuizTotalCommentUpdatebtn";
 
 interface Props {
   comment: QuizComment;
@@ -11,32 +10,39 @@ interface Props {
   currentPage: number;
 }
 
-const QuizTotalCommentListItem = ({ comment, loadComments, currentPage }: Props) => {
-  const { text, createdAt, authorEmail, id, quizId } = comment;
+const QuizTotalCommentListItem = ({
+  comment,
+  loadComments,
+  currentPage,
+}: Props) => {
+  const { text, createdAt, authorEmail, id } = comment;
   const { user } = userStore();
-
-  const handleDelete = async () => {
-    if (user?.email !== authorEmail) return;
-
-    try {
-      const commentRef = doc(db, "comments", id);
-      await deleteDoc(commentRef);
-
-      loadComments(currentPage)
-    } catch (error) {
-      console.error("댓글 삭제 중 오류 발생:", error);
-    }
-  };
 
   return (
     <div className="p-3 rounded shadow w-full">
       <p className="text-sm">{text}</p>
-      {user && user.email === authorEmail ? (
-        <QuizTotalCommentDelbtn onClick={handleDelete} />
-      ) : null}
-      <small className="text-gray-500 text-sm inline-block text-right w-full">
-        {createdAt.toDate().toLocaleString()} - {authorEmail}
-      </small>
+      <div className="flex justify-between items-center mt-4">
+        {user && user.email === authorEmail ? (
+          <div className="flex gap-2">
+            <QuizTotalCommentDelbtn
+              currentPage={currentPage}
+              id={id}
+              authorEmail={authorEmail}
+              loadComments={loadComments}
+            />
+            <QuizTotalCommentUpdatebtn
+              text={text}
+              id={id}
+              authorEmail={authorEmail}
+              loadComments={loadComments}
+              currentPage={currentPage}
+            />
+          </div>
+        ) : null}
+        <small className="text-gray-500 text-sm inline-block text-right w-full">
+          {createdAt.toDate().toLocaleString()} - {authorEmail}
+        </small>
+      </div>
     </div>
   );
 };
