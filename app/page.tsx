@@ -1,7 +1,7 @@
 "use client";
 
 import HomeInfo from "@/components/Home/HomeInfo";
-import HomeTabMenu from "@/components/Home/HomeTabMenu";
+import HomeMenu from "@/components/Home/HomeMenu";
 import QuizLists from "@/components/Home/QuiszLists";
 import { useState } from "react";
 
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="flex-1 mx-auto 2xl:w-[1440px] w-full ">
       <HomeInfo />
-      <HomeTabMenu tabmenu={tabmenu} setTabMenu={setTabMenu}/>
+      <HomeMenu tabmenu={tabmenu} setTabMenu={setTabMenu}/>
       <QuizLists tabmenu={tabmenu} />
     </div>
   );
