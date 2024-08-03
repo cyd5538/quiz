@@ -2,31 +2,53 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import { useRouter } from 'next/navigation'
 import { useToast } from "@/components/ui/use-toast";
 import userStore from "@/stores/userStore";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 
 const OauthSign = () => {
   const router = useRouter()
   const { toast } = useToast()
-  const { user, setUser } = userStore()
+  const { setUser } = userStore()
 
-  if(user) {
-    router.push("/")
-    return null;
+  const updateUserDb = async (user: any) => {
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      await setDoc(userRef, {
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        createdAt: serverTimestamp(),
+      });
+    } else {
+      await setDoc(userRef, {
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        lastLogin: serverTimestamp(),
+      }, { merge: true });
+    }
   }
 
   const handleLogin = async (provider: any) => {
     try {
       const result = await signInWithPopup(auth, provider);
+      await updateUserDb(result.user);
       setUser(result.user);
       toast({
-        description: "성공적으로 로그인 되었습니다.",
+        description: "You have successfully logged in.",
       })
       router.push("/")
     } catch (error: any) {
       console.error("error: ", error);
+      toast({
+        description: "An error occurred while logging in.",
+        variant: "destructive",
+      })
     }
   };
 
