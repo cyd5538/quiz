@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { cn } from "@/lib/utils";
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { Label } from "@/components/ui/label";
@@ -42,9 +42,10 @@ export default function Signup() {
       });
 
       await setDoc(doc(db, "users", user.uid), {
-        name: name,
+        displayName: name,
         email: email,
-        photoURL: ""
+        photoURL: "",
+        createdAt: serverTimestamp()
       });
 
       toast({

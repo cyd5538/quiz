@@ -2,7 +2,6 @@
 
 import OauthSign from "@/components/Sign/OauthSign";
 import Signin from "@/components/Sign/Signin";
-import Signup from "@/components/Sign/Signup";
 import {
   Card,
   CardContent,
