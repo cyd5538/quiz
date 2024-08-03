@@ -33,14 +33,14 @@ const Sidebar = () => {
       await signOut(auth);
       setUser(null);
       toast({
-        description: "로그아웃되었습니다.",
+        description: "You have logged out.",
       });
     
       router.push("/signup");
     } catch (error) {
-      console.error("로그아웃 중 오류 발생:", error);
+      console.error("An error occurred while logging out:", error);
       toast({
-        description: "로그아웃 중 오류가 발생했습니다.",
+        description: "An error occurred while logging out.",
       });
     }
   };
@@ -48,7 +48,7 @@ const Sidebar = () => {
   return (
     <header
       className={`fixed left-0 top-0 h-screen z-10 bg-zinc-800 text-white transition-all duration-300 ${
-        isOpen ? "w-[250px]" : "w-[110px]"
+        isOpen ? "w-[250px]" : "w-[90px]"
       }`}
     >
       <Button
@@ -59,7 +59,7 @@ const Sidebar = () => {
         {isOpen ? <ChevronLeft /> : <ChevronRight />}
       </Button>
       <nav className="flex flex-col items-start justify-center ml-2 mr-2 space-y-4 pt-20">
-        <Link className={`cursor-pointer text-2xl font-bold mb-12 mt-4 hover:text-gray-100 ${isOpen ? "pl-6" : "pl-2"}`} href="/">
+        <Link className={`${isOpen ? "text-3xl": "text-xl"} cursor-pointer font-bold mb-12 mt-4 hover:text-gray-100 ${isOpen ? "pl-6" : "pl-2"}`} href="/">
           QuizAI
         </Link>
 
