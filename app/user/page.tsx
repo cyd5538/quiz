@@ -12,15 +12,17 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Label } from "@/components/ui/label";
 import { X, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const { user, setUser } = userStore();
+  const { user, setUser, loading } = userStore();
   const [displayName, setDisplayName] = useState<string>(user?.displayName || "");
   const [photoURL, setPhotoURL] = useState<string>(user?.photoURL || "");
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { toast } = useToast()
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -79,6 +81,15 @@ export default function Home() {
     setFile(null);
     setPhotoURL(user?.photoURL || "");
   };
+
+  if (loading) {
+    return <div></div>; 
+  }
+
+  if (!user) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <div className="pl-2 flex-1 mx-auto 2xl:w-[1440px] w-full mt-32">
