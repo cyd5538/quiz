@@ -22,7 +22,7 @@ export default function Page() {
           <OauthSign />
         </CardContent>
         <Link href="/signup">
-          <p className="text-gray-500 underline hover:text-gray-700">Don't have an account?</p>
+          <p className="text-gray-500 underline hover:text-gray-700">Don&apos;t have an account?</p>
         </Link>
       </Card>
     </div>
