@@ -81,10 +81,16 @@ Example output for topic 'history':
     }
     return NextResponse.json({ quiz: text }, { status: 200 });
   } catch (error) {
-    console.error("Detailed error:", error);
-    return NextResponse.json(
-      { error: error.message || "An unexpected error occurred" },
-      { status: 500 }
-    );
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: error.message || "An unexpected error occurred" },
+        { status: 500 }
+      );
+    } else {
+      return NextResponse.json(
+        { error: "An unexpected error occurred" },
+        { status: 500 }
+      );
+    }
   }
 }
